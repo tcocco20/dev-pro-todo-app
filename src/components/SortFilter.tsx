@@ -3,24 +3,34 @@ import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
-  DropdownSection,
   DropdownTrigger,
+  Radio,
+  RadioGroup,
 } from "@nextui-org/react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
 interface FilterProps {
   buttonTitle: string;
-  menuItems?: { key: string; label: string; last: boolean }[];
+  menuItems?: { key: string; label: string }[];
 }
 
-const Filter = ({
-  buttonTitle,
-  menuItems = [
-    { key: "emptyKey123", label: "Create tags to filter by!", last: true },
-  ],
-}: FilterProps) => {
+const SortFilter = ({ buttonTitle, menuItems }: FilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const generateFilters = (options: { key: string; label: string }[]) => {
+    return options.map((option) => (
+      <Radio
+        key={option.key}
+        classNames={{
+          base: "flex-row-reverse justify-between max-w-full w-full",
+          label: "text-xs",
+        }}
+        value={option.key}
+      >
+        {option.label}
+      </Radio>
+    ));
+  };
   return (
     <Dropdown onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DropdownTrigger>
@@ -37,24 +47,14 @@ const Filter = ({
         aria-label="Static Actions"
         items={menuItems}
         disabledKeys={["emptyKey123"]}
+        selectionMode="none"
       >
-        {(item) =>
-          item.last ? (
-            <DropdownItem key={item.key}>{item.label}</DropdownItem>
-          ) : (
-            <DropdownSection showDivider>
-              <DropdownItem
-                key={item.key}
-                selectedIcon={<div className="hidden" />}
-              >
-                {item.label}
-              </DropdownItem>
-            </DropdownSection>
-          )
-        }
+        <DropdownItem isReadOnly>
+          <RadioGroup>{generateFilters(menuItems!)}</RadioGroup>
+        </DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );
 };
 
-export default Filter;
+export default SortFilter;

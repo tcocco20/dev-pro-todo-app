@@ -1,4 +1,5 @@
 import Filter from "./Filter";
+import SortFilter from "./SortFilter";
 
 const Filters = () => {
   const sortOptions = [
@@ -12,12 +13,8 @@ const Filters = () => {
   ];
   return (
     <div className="flex gap-8">
-      <Filter
-        buttonTitle="Sort"
-        menuItems={sortOptions}
-        selectionMode="single"
-      />
-      <Filter buttonTitle="Category" selectionMode="multiple" />
+      <SortFilter buttonTitle="Sort" menuItems={sortOptions} />
+      <Filter buttonTitle="Category" />
     </div>
   );
 };
