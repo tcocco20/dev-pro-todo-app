@@ -8,6 +8,7 @@ import {
 } from "@nextui-org/react";
 import { ChevronDown, ChevronUp, CircleCheck } from "lucide-react";
 import { useState } from "react";
+import classes from "./filter.module.css";
 
 interface FilterProps {
   buttonTitle: string;
@@ -45,14 +46,32 @@ const Filter = ({
       >
         {(item) =>
           item.last ? (
-            <DropdownItem key={item.key}>{item.label}</DropdownItem>
+            <DropdownItem
+              key={item.key}
+              selectedIcon={<div className="hidden" />}
+              endContent={
+                item.icon === false ? (
+                  <div className="hidden" />
+                ) : (
+                  <CircleCheck
+                    className={`${classes.selected} bg-black rounded-full`}
+                  />
+                )
+              }
+            >
+              {item.label}
+            </DropdownItem>
           ) : (
             <DropdownSection showDivider>
               <DropdownItem
                 key={item.key}
                 selectedIcon={<div className="hidden" />}
                 endContent={
-                  !item.icon ? <div className="hidden" /> : <CircleCheck />
+                  item.icon === false ? (
+                    <div className="hidden" />
+                  ) : (
+                    <CircleCheck />
+                  )
                 }
               >
                 {item.label}
