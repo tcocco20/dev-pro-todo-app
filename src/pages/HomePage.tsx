@@ -6,18 +6,21 @@ import { Plus } from "lucide-react";
 
 const HomePage = () => {
   return (
-    <div className="flex flex-col gap-5 items-center">
+    <div className="flex flex-col gap-5">
       <SearchBar />
       <Filters />
       <TodoList />
-      <Button
-        size="lg"
-        radius="full"
-        className="text-lg"
-        startContent={<Plus />}
-      >
-        Load More
-      </Button>
+      <div className="text-center">
+        <Button
+          size="lg"
+          radius="full"
+          className="text-xl opacity-85 py-8"
+          startContent={<Plus />}
+          color="primary"
+        >
+          Add New Task
+        </Button>
+      </div>
     </div>
   );
 };

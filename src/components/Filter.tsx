@@ -34,7 +34,9 @@ const Filter = ({
           size="lg"
           className="flex-1 bg-white"
           radius="full"
-          endContent={isOpen ? <ChevronUp /> : <ChevronDown />}
+          endContent={
+            isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />
+          }
         >
           {buttonTitle}
         </Button>

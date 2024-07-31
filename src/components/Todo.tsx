@@ -10,7 +10,12 @@ import { Check, PenLine } from "lucide-react";
 
 export default function Todo() {
   return (
-    <Card>
+    <Card
+      isPressable
+      onPress={() => {
+        console.log("Pressed");
+      }}
+    >
       <CardHeader className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
           <div className="w-5 h-5 rounded-full bg-blue-300" />
