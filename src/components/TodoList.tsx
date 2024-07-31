@@ -2,7 +2,8 @@ import Todo from "./Todo";
 
 const TodoList = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-5">
+      <Todo />
       <Todo />
     </div>
   );

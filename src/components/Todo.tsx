@@ -1,4 +1,11 @@
-import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Chip,
+  CircularProgress,
+} from "@nextui-org/react";
 import { Check, PenLine } from "lucide-react";
 
 export default function Todo() {
@@ -18,12 +25,24 @@ export default function Todo() {
           </Button>
         </div>
       </CardHeader>
-      <CardBody className="flex">
+      <CardBody className="flex flex-row justify-between">
         <div className="flex flex-col gap-1">
           <p>Due Date: Tomorrow, 9:00 AM</p>
           <p>Priority: High (8/10)</p>
           <p>Complexity: Moderate (5/10)</p>
+          <div className="flex gap-2 flex-wrap">
+            <Chip size="sm" className="bg-teal-200">
+              Tag 1
+            </Chip>
+            <Chip size="sm" className="bg-orange-200">
+              Tag 2
+            </Chip>
+            <Chip size="sm" className="bg-green-200">
+              Tag 3
+            </Chip>
+          </div>
         </div>
+        <CircularProgress size="lg" value={50} showValueLabel />
       </CardBody>
     </Card>
   );
