@@ -3,17 +3,25 @@ import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
+  DropdownSection,
   DropdownTrigger,
 } from "@nextui-org/react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Circle, CircleDot } from "lucide-react";
 import { useState } from "react";
 
 interface FilterProps {
   buttonTitle: string;
-  menuItems?: { key: string; label: string }[];
+  menuItems?: { key: string; label: string; last: boolean }[];
+  selectionMode?: "single" | "multiple";
 }
 
-const Filter = ({ buttonTitle, menuItems }: FilterProps) => {
+const Filter = ({
+  buttonTitle,
+  menuItems = [
+    { key: "emptyKey123", label: "Create tags to filter by!", last: true },
+  ],
+  selectionMode,
+}: FilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Dropdown onOpenChange={(isOpen) => setIsOpen(isOpen)}>
@@ -27,8 +35,33 @@ const Filter = ({ buttonTitle, menuItems }: FilterProps) => {
           {buttonTitle}
         </Button>
       </DropdownTrigger>
-      <DropdownMenu aria-label="Static Actions" items={menuItems}>
-        {(item) => <DropdownItem key={item.key}>{item.label}</DropdownItem>}
+      <DropdownMenu
+        aria-label="Static Actions"
+        items={menuItems}
+        disabledKeys={["emptyKey123"]}
+        selectionMode={selectionMode}
+      >
+        {(item) =>
+          item.last ? (
+            <DropdownItem
+              key={item.key}
+              selectedIcon={<CircleDot />}
+              endContent={<Circle />}
+            >
+              {item.label}
+            </DropdownItem>
+          ) : (
+            <DropdownSection showDivider>
+              <DropdownItem
+                key={item.key}
+                selectedIcon={<CircleDot />}
+                endContent={<Circle />}
+              >
+                {item.label}
+              </DropdownItem>
+            </DropdownSection>
+          )
+        }
       </DropdownMenu>
     </Dropdown>
   );
