@@ -5,8 +5,10 @@ import {
   DropdownMenu,
   DropdownSection,
   DropdownTrigger,
+  Radio,
+  RadioGroup,
 } from "@nextui-org/react";
-import { ChevronDown, ChevronUp, Circle, CircleDot } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
 interface FilterProps {
@@ -43,21 +45,33 @@ const Filter = ({
       >
         {(item) =>
           item.last ? (
-            <DropdownItem
-              key={item.key}
-              selectedIcon={<CircleDot />}
-              endContent={<Circle />}
-            >
-              {item.label}
+            <DropdownItem key={item.key}>
+              <RadioGroup>
+                <Radio
+                  value={item.key}
+                  classNames={{
+                    base: "inline-flex flex-row-reverse justify-between items-center",
+                  }}
+                >
+                  {item.label}
+                </Radio>
+              </RadioGroup>
             </DropdownItem>
           ) : (
             <DropdownSection showDivider>
-              <DropdownItem
-                key={item.key}
-                selectedIcon={<CircleDot />}
-                endContent={<Circle />}
-              >
-                {item.label}
+              <DropdownItem key={item.key}>
+                <RadioGroup>
+                  <Radio
+                    classNames={{
+                      base: "inline-flex flex-row-reverse justify-between w-full",
+                      label: "text-sm w-full",
+                      labelWrapper: "w-full",
+                    }}
+                    value={item.key}
+                  >
+                    {item.label}
+                  </Radio>
+                </RadioGroup>
               </DropdownItem>
             </DropdownSection>
           )
