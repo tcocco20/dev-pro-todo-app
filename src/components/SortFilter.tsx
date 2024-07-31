@@ -12,18 +12,22 @@ import { useState } from "react";
 
 interface FilterProps {
   buttonTitle: string;
-  menuItems?: { key: string; label: string }[];
+  menuItems?: { key: string; label: string; last: boolean }[];
 }
 
 const SortFilter = ({ buttonTitle, menuItems }: FilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const generateFilters = (options: { key: string; label: string }[]) => {
+  const generateFilters = (
+    options: { key: string; label: string; last: boolean }[]
+  ) => {
     return options.map((option) => (
       <Radio
         key={option.key}
         classNames={{
-          base: "flex-row-reverse justify-between max-w-full w-full",
-          label: "text-xs",
+          base: `flex-row-reverse justify-between max-w-full m-0 w-full${
+            option.last ? "" : " border-b mb-1"
+          }`,
+          label: "text-sm",
         }}
         value={option.key}
       >
@@ -48,9 +52,12 @@ const SortFilter = ({ buttonTitle, menuItems }: FilterProps) => {
         items={menuItems}
         disabledKeys={["emptyKey123"]}
         selectionMode="none"
+        classNames={{ list: "inline-block" }}
       >
         <DropdownItem isReadOnly>
-          <RadioGroup>{generateFilters(menuItems!)}</RadioGroup>
+          <RadioGroup color="default" defaultValue={"default"}>
+            {generateFilters(menuItems!)}
+          </RadioGroup>
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>

@@ -6,18 +6,23 @@ import {
   DropdownSection,
   DropdownTrigger,
 } from "@nextui-org/react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, CircleCheck } from "lucide-react";
 import { useState } from "react";
 
 interface FilterProps {
   buttonTitle: string;
-  menuItems?: { key: string; label: string; last: boolean }[];
+  menuItems?: { key: string; label: string; last: boolean; icon?: boolean }[];
 }
 
 const Filter = ({
   buttonTitle,
   menuItems = [
-    { key: "emptyKey123", label: "Create tags to filter by!", last: true },
+    {
+      key: "emptyKey123",
+      label: "Create tags to filter by!",
+      last: true,
+      icon: false,
+    },
   ],
 }: FilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +51,9 @@ const Filter = ({
               <DropdownItem
                 key={item.key}
                 selectedIcon={<div className="hidden" />}
+                endContent={
+                  !item.icon ? <div className="hidden" /> : <CircleCheck />
+                }
               >
                 {item.label}
               </DropdownItem>
