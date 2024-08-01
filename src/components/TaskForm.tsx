@@ -1,6 +1,7 @@
 import { Input } from "@nextui-org/react";
 import CustomSelect from "./CustomSelect";
 import DateTimeInputs from "./DateTimeInputs";
+import Subtasks from "./Subtasks";
 
 const TaskForm = () => {
   return (
@@ -17,6 +18,7 @@ const TaskForm = () => {
       <CustomSelect label="Select Priority Level" />
       <CustomSelect label="Select Complexity Level" />
       <DateTimeInputs />
+      <Subtasks />
     </div>
   );
 };
