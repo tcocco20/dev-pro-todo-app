@@ -36,7 +36,7 @@ export default function Todo({ urgency }: TodoProps) {
                 : "bg-blue-400"
             }`}
           />
-          <h3 className="text-xl">Prepare for job interview</h3>
+          <h3 className="text-lg">Prepare for job interview</h3>
         </div>
         <div className="flex gap-4 items-center">
           <Button
@@ -78,11 +78,15 @@ export default function Todo({ urgency }: TodoProps) {
           </div>
           <div className="flex items-center gap-2">
             <ArrowUp size={20} />
-            <p>Priority: High (8/10)</p>
+            <p>
+              <span className="text-zinc-500">Priority: </span>High (8/10)
+            </p>
           </div>
           <div className="flex items-center gap-2">
             <Move size={20} />
-            <p>Complexity: Moderate (5/10)</p>
+            <p>
+              <span className="text-zinc-500">Complexity: </span>Moderate (5/10)
+            </p>
           </div>
           <div className="flex gap-2 flex-wrap">
             <Chip size="sm" className="bg-teal-200">
