@@ -1,5 +1,6 @@
 import { Button, Input } from "@nextui-org/react";
 import { Plus } from "lucide-react";
+import Subtask from "./Subtask";
 
 const Subtasks = () => {
   return (
@@ -8,7 +9,6 @@ const Subtasks = () => {
       <div className="flex flex-col-reverse gap-5">
         <Input
           placeholder="Type to add new subtask..."
-          labelPlacement="outside"
           radius="full"
           size="lg"
           variant="bordered"
@@ -24,6 +24,8 @@ const Subtasks = () => {
             </Button>
           }
         />
+        <Subtask focused={true} />
+        <Subtask focused={false} />
       </div>
     </div>
   );

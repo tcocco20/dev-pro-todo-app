@@ -16,23 +16,26 @@ interface TodoProps {
 export default function Todo({ urgency }: TodoProps) {
   const navigate = useNavigate();
 
-  const urgencyIndicatorColor =
-    urgency === "high"
-      ? "red-500"
-      : urgency === "medium"
-      ? "orange-400"
-      : "blue-400";
-
   return (
     <Card
       isPressable
       onPress={() => {
-        navigate("view/1");
+        setTimeout(() => {
+          navigate("view/1");
+        }, 250);
       }}
     >
       <CardHeader className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
-          <div className={`w-5 h-5 rounded-full bg-${urgencyIndicatorColor}`} />
+          <div
+            className={`w-5 h-5 rounded-full ${
+              urgency === "high"
+                ? "bg-red-500"
+                : urgency === "medium"
+                ? "bg-orange-400"
+                : "bg-blue-400"
+            }`}
+          />
           <h3 className="text-xl">Prepare for job interview</h3>
         </div>
         <div className="flex gap-4 items-center">
@@ -41,7 +44,11 @@ export default function Todo({ urgency }: TodoProps) {
             radius="full"
             size="sm"
             className="bg-blue-100/70"
-            onPress={() => navigate("edit/1")}
+            onPress={() => {
+              setTimeout(() => {
+                navigate("edit/1");
+              }, 250);
+            }}
           >
             <PenLine size={22} />
           </Button>
@@ -56,7 +63,15 @@ export default function Todo({ urgency }: TodoProps) {
             <Calendar size={20} />
             <p>
               <span className="text-zinc-500">Due Date: </span>
-              <span className={`text-${urgencyIndicatorColor}`}>
+              <span
+                className={`${
+                  urgency === "high"
+                    ? "text-red-500"
+                    : urgency === "medium"
+                    ? "text-orange-400"
+                    : "text-blue-400"
+                }`}
+              >
                 Tomorrow, 9:00 AM
               </span>
             </p>

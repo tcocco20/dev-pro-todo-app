@@ -1,20 +1,27 @@
 import { Button, Input } from "@nextui-org/react";
-import { Plus } from "lucide-react";
-// import { useRef } from "react";
+import { Check, X } from "lucide-react";
 
-const Subtask = () => {
+interface SubtaskProps {
+  focused: boolean;
+}
+
+const Subtask = ({ focused }: SubtaskProps) => {
   return (
     <Input
-      //   ref={ref}
       placeholder="Type to add new subtask..."
-      labelPlacement="outside"
       radius="full"
       size="lg"
       variant="bordered"
       classNames={{ inputWrapper: "bg-white py-6" }}
+      startContent={"1."}
       endContent={
-        <Button isIconOnly radius="full" size="sm" className="bg-blue-100/70">
-          <Plus />
+        <Button
+          isIconOnly
+          radius="full"
+          size="sm"
+          className={`${focused ? "bg-blue-100/70" : "bg-red-100/70"}`}
+        >
+          {focused ? <Check /> : <X />}
         </Button>
       }
     />

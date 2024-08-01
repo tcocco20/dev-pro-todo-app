@@ -14,7 +14,11 @@ const PageHeader = ({ title }: PageHeaderProps) => {
         isIconOnly
         radius="full"
         className="bg-white"
-        onPress={() => navigate("..")}
+        onPress={() => {
+          setTimeout(() => {
+            navigate("..");
+          }, 250);
+        }}
       >
         <ArrowLeft />
       </Button>

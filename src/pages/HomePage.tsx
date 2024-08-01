@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-5">
       <SearchBar />
@@ -19,7 +19,11 @@ const HomePage = () => {
           className="text-xl opacity-85 py-8"
           startContent={<Plus />}
           color="primary"
-          onClick={() => navigation("add-new")}
+          onClick={() => {
+            setTimeout(() => {
+              navigate("add-new");
+            }, 250);
+          }}
         >
           Add New Task
         </Button>
