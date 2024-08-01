@@ -1,21 +1,28 @@
 import { DatePicker, TimeInput } from "@nextui-org/react";
+import { Calendar, Clock } from "lucide-react";
 
 const DateTimeInputs = () => {
   return (
-    <div className="flex justify-between gap-5">
+    <div className="flex justify-between gap-7">
       <DatePicker
-        classNames={{ timeInput: "bg-white py-6", timeInputLabel: "text-lg" }}
-        size="lg"
+        dateInputClassNames={{
+          inputWrapper: "bg-white py-6",
+          label: "text-lg",
+        }}
+        classNames={{ selectorIcon: "text-blue-400" }}
+        selectorIcon={<Calendar size={18} />}
         label="Select Due Date"
         labelPlacement="outside"
         radius="full"
+        variant="bordered"
       />
       <TimeInput
         classNames={{ inputWrapper: "bg-white py-6", label: "text-lg" }}
-        size="lg"
         label="Select Time"
         labelPlacement="outside"
         radius="full"
+        variant="bordered"
+        endContent={<Clock className="text-blue-400" />}
       />
     </div>
   );

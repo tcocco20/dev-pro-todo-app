@@ -5,6 +5,7 @@ const TodoList = () => {
     <div className="flex flex-col gap-5">
       <Todo urgency="high" />
       <Todo urgency="low" />
+      <Todo urgency="medium" />
     </div>
   );
 };
