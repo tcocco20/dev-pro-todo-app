@@ -13,7 +13,7 @@ interface DetailsCardProps {
 
 const DetailsCard = ({ urgency }: DetailsCardProps) => {
   return (
-    <Card shadow="none">
+    <Card shadow="none" className="mb-8">
       <CardHeader>
         <div className="flex gap-3 items-center">
           <div
