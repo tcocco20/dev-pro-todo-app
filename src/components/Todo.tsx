@@ -7,13 +7,15 @@ import {
   CircularProgress,
 } from "@nextui-org/react";
 import { Check, PenLine } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Todo() {
+  const navigate = useNavigate();
   return (
     <Card
       isPressable
       onPress={() => {
-        console.log("Pressed");
+        navigate("view/1");
       }}
     >
       <CardHeader className="flex justify-between items-center">
@@ -22,7 +24,13 @@ export default function Todo() {
           <h3 className="text-xl">Prepare for job interview</h3>
         </div>
         <div className="flex gap-4 items-center">
-          <Button isIconOnly radius="full" size="sm" className="bg-blue-100/70">
+          <Button
+            isIconOnly
+            radius="full"
+            size="sm"
+            className="bg-blue-100/70"
+            onPress={() => navigate("edit/1")}
+          >
             <PenLine size={22} />
           </Button>
           <Button isIconOnly radius="full" size="sm" className="bg-blue-100/70">
