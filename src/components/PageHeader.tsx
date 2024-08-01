@@ -9,7 +9,7 @@ interface PageHeaderProps {
 const PageHeader = ({ title }: PageHeaderProps) => {
   const navigate = useNavigate();
   return (
-    <div className="flex items-center">
+    <div className="flex items-center mb-10">
       <Button
         isIconOnly
         radius="full"
@@ -18,7 +18,7 @@ const PageHeader = ({ title }: PageHeaderProps) => {
       >
         <ArrowLeft />
       </Button>
-      <h1 className="text-2xl flex-1 text-center">{title}</h1>
+      <h1 className="text-2xl flex-1 text-center mr-10">{title}</h1>
     </div>
   );
 };

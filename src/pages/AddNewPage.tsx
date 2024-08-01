@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
+import TaskForm from "../components/TaskForm";
 
 const AddNewPage = () => {
   const { id } = useParams();
@@ -9,6 +10,7 @@ const AddNewPage = () => {
   return (
     <>
       <PageHeader title={id ? "Edit Task" : "Add New Task"} />
+      <TaskForm />
     </>
   );
 };
