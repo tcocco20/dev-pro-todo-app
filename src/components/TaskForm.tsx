@@ -35,7 +35,7 @@ const TaskForm = () => {
             }, 250);
           }}
         >
-          Add New Task
+          Save Task
         </Button>
       </div>
     </div>
