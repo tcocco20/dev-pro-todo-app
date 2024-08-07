@@ -84,8 +84,8 @@ const TaskForm = ({ todo }: TaskFormProps) => {
         onValueChange={setComplexity}
       />
       <DateTimeInputs value={dueDate} onValueChange={setDueDate} />
-      <Subtasks />
-      <TagsInput />
+      <Subtasks tasks={subtasks} setSubtasks={setSubtasks} />
+      <TagsInput value={tags} onValueChange={setTags} />
       <div className="text-center">
         <Button
           size="lg"

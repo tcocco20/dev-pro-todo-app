@@ -4,26 +4,34 @@ import { useState } from "react";
 
 interface SubtaskProps {
   title: string;
+  index: number;
+  onUpdate: (title: string) => void;
+  onDelete: () => void;
 }
 
-const Subtask = ({ title }: SubtaskProps) => {
+const Subtask = ({ title, index, onUpdate, onDelete }: SubtaskProps) => {
   const [value, setValue] = useState(title);
   const [focused, setFocused] = useState(false);
 
   const buttonPressHandler = () => {
-    console.log(value);
+    if (focused) {
+      onUpdate(value);
+    } else {
+      onDelete();
+    }
   };
   return (
     <Input
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
       value={value}
+      onValueChange={setValue}
       placeholder="Type to add new subtask..."
       radius="full"
       size="lg"
       variant="bordered"
       classNames={{ inputWrapper: "bg-white py-6" }}
-      startContent={"1."}
+      startContent={`${index + 1}.`}
       endContent={
         <Button
           isIconOnly
