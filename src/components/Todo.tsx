@@ -3,12 +3,12 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Chip,
   CircularProgress,
 } from "@nextui-org/react";
 import { ArrowUp, Calendar, Check, Move, PenLine } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { type Todo } from "../store/todo-context";
+import Tag from "./Tag";
 
 interface TodoProps {
   todo: Todo;
@@ -74,33 +74,31 @@ export default function Todo({ todo }: TodoProps) {
                     : "text-blue-400"
                 }`}
               >
-                Tomorrow, 9:00 AM
+                {todo.dueDate.day}, {todo.dueDate.hour}:{todo.dueDate.minute}{" "}
               </span>
             </p>
           </div>
           <div className="flex items-center gap-2">
             <ArrowUp size={20} />
             <p>
-              <span className="text-zinc-500">Priority: </span>High (8/10)
+              <span className="text-zinc-500">Priority: </span>High (
+              {todo.priority}/10)
             </p>
           </div>
           <div className="flex items-center gap-2">
             <Move size={20} />
             <p>
-              <span className="text-zinc-500">Complexity: </span>Moderate (5/10)
+              <span className="text-zinc-500">Complexity: </span>Moderate (
+              {todo.complexity}/10)
             </p>
           </div>
-          <div className="flex gap-2 flex-wrap">
-            <Chip size="sm" className="bg-teal-200">
-              Tag 1
-            </Chip>
-            <Chip size="sm" className="bg-orange-200">
-              Tag 2
-            </Chip>
-            <Chip size="sm" className="bg-green-200">
-              Tag 3
-            </Chip>
-          </div>
+          {todo.tags.length && (
+            <div className="flex gap-2 flex-wrap">
+              {todo.tags.map((tag, i) => (
+                <Tag key={i} title={tag} index={i} />
+              ))}
+            </div>
+          )}
         </div>
         <CircularProgress size="lg" value={20} showValueLabel />
       </CardBody>

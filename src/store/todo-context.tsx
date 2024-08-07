@@ -1,14 +1,15 @@
-import { CalendarDate } from "@internationalized/date";
+import { CalendarDateTime } from "@internationalized/date";
 import { createContext, useState, type ReactNode } from "react";
+
+export type TodoRange = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 export interface Todo {
   id: string;
   title: string;
-  description: string;
   completed: boolean;
-  dueDate: CalendarDate;
-  priority: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-  complexity: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+  dueDate: CalendarDateTime;
+  priority: TodoRange;
+  complexity: TodoRange;
   tags: string[];
   subtasks: {
     title: string;
