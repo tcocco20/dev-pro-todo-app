@@ -8,20 +8,22 @@ import {
 } from "@nextui-org/react";
 import { ArrowUp, Calendar, Check, Move, PenLine } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { type Todo } from "../store/todo-context";
 
 interface TodoProps {
-  urgency: "high" | "medium" | "low";
+  todo: Todo;
 }
 
-export default function Todo({ urgency }: TodoProps) {
+export default function Todo({ todo }: TodoProps) {
   const navigate = useNavigate();
+  const urgency = "high";
 
   return (
     <Card
       isPressable
       onPress={() => {
         setTimeout(() => {
-          navigate("view/1");
+          navigate(`view/${todo.id}`);
         }, 250);
       }}
     >
@@ -36,7 +38,7 @@ export default function Todo({ urgency }: TodoProps) {
                 : "bg-blue-400"
             }`}
           />
-          <h3 className="text-lg">Prepare for job interview</h3>
+          <h3 className="text-lg">{todo.title}</h3>
         </div>
         <div className="flex gap-4 items-center">
           <Button
@@ -46,7 +48,7 @@ export default function Todo({ urgency }: TodoProps) {
             className="bg-blue-100/70"
             onPress={() => {
               setTimeout(() => {
-                navigate("edit/1");
+                navigate(`edit/${todo.id}`);
               }, 250);
             }}
           >
