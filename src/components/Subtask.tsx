@@ -2,10 +2,10 @@ import { Button, Input } from "@nextui-org/react";
 import { Check, X } from "lucide-react";
 
 interface SubtaskProps {
-  focused: boolean;
+  title: string;
 }
 
-const Subtask = ({ focused }: SubtaskProps) => {
+const Subtask = ({ title }: SubtaskProps) => {
   return (
     <Input
       placeholder="Type to add new subtask..."
