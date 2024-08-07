@@ -1,7 +1,7 @@
 import { Button, Input } from "@nextui-org/react";
 import { Plus } from "lucide-react";
 import Subtask from "./Subtask";
-import { useRef } from "react";
+import { useState } from "react";
 
 interface SubtasksProps {
   tasks: {
@@ -19,7 +19,7 @@ interface SubtasksProps {
 }
 
 const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
-  const taskRef = useRef<HTMLInputElement>(null);
+  const [newTask, setNewTask] = useState("");
 
   const updateSubtask = (index: number, title: string) => {
     setSubtasks((prev) => {
@@ -41,15 +41,16 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
       <p className="text-lg mb-2">Add Checklist for Subtasks</p>
       <div className="flex flex-col-reverse gap-5">
         <Input
-          ref={taskRef}
           placeholder="Type to add new subtask..."
+          value={newTask}
+          onValueChange={setNewTask}
           radius="full"
           size="lg"
           variant="bordered"
           classNames={{ inputWrapper: "bg-white py-6" }}
           onSubmit={() => {
             console.log("Submitted");
-            console.log(taskRef.current?.value);
+            console.log(newTask);
           }}
           endContent={
             <Button
@@ -60,9 +61,9 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
               onPress={() => {
                 setSubtasks((prev) => [
                   ...prev,
-                  { title: taskRef.current?.value || "", completed: false },
+                  { title: newTask || "", completed: false },
                 ]);
-                taskRef.current!.value = "";
+                setNewTask("");
               }}
             >
               <Plus />

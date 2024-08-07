@@ -1,16 +1,20 @@
 import { useParams } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import TaskForm from "../components/TaskForm";
+import { useTodoContext } from "../store/useTodoContext";
+import { Todo } from "../store/todo-context";
 
 const AddNewPage = () => {
   const { id } = useParams();
+  const { getTodoById } = useTodoContext();
+  let todo: Todo | undefined;
   if (id) {
-    console.log("Editing task with ID:", id);
+    todo = getTodoById(id);
   }
   return (
     <>
       <PageHeader title={id ? "Edit Task" : "Add New Task"} />
-      <TaskForm />
+      <TaskForm todo={todo} />
     </>
   );
 };

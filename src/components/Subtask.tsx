@@ -10,39 +10,42 @@ interface SubtaskProps {
 }
 
 const Subtask = ({ title, index, onUpdate, onDelete }: SubtaskProps) => {
-  const [value, setValue] = useState(title);
   const [focused, setFocused] = useState(false);
 
-  const buttonPressHandler = () => {
-    if (focused) {
-      onUpdate(value);
-    } else {
-      onDelete();
-    }
-  };
+  const taskButton = focused ? (
+    <Button
+      isIconOnly
+      radius="full"
+      size="sm"
+      className="bg-blue-100/70"
+      onPress={() => onUpdate(title)}
+    >
+      <Check />
+    </Button>
+  ) : (
+    <Button
+      isIconOnly
+      radius="full"
+      size="sm"
+      className="bg-red-100/70"
+      onPress={onDelete}
+    >
+      <X />
+    </Button>
+  );
   return (
     <Input
       onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
-      value={value}
-      onValueChange={setValue}
+      onBlur={() => setTimeout(() => setFocused(false), 100)}
+      value={title}
+      onValueChange={onUpdate}
       placeholder="Type to add new subtask..."
       radius="full"
       size="lg"
       variant="bordered"
       classNames={{ inputWrapper: "bg-white py-6" }}
       startContent={`${index + 1}.`}
-      endContent={
-        <Button
-          isIconOnly
-          radius="full"
-          size="sm"
-          className={`${focused ? "bg-blue-100/70" : "bg-red-100/70"}`}
-          onPress={buttonPressHandler}
-        >
-          {focused ? <Check /> : <X />}
-        </Button>
-      }
+      endContent={taskButton}
     />
   );
 };
