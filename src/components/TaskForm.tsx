@@ -16,6 +16,7 @@ interface TaskFormProps {
 
 const TaskForm = ({ todo }: TaskFormProps) => {
   const navigate = useNavigate();
+  const today = new Date();
   const [title, setTitle] = useState(todo?.title || "");
   const [priority, setPriority] = useState<TodoRange>(todo?.priority || 1);
   const [complexity, setComplexity] = useState<TodoRange>(
@@ -24,9 +25,11 @@ const TaskForm = ({ todo }: TaskFormProps) => {
   const [dueDate, setDueDate] = useState(
     todo?.dueDate ||
       new CalendarDateTime(
-        new Date().getFullYear(),
-        new Date().getMonth() + 1,
-        new Date().getDate()
+        today.getFullYear(),
+        today.getMonth() + 1,
+        today.getDate(),
+        today.getHours(),
+        today.getMinutes()
       )
   );
   const [subtasks, setSubtasks] = useState(todo?.subtasks || []);

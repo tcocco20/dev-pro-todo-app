@@ -9,9 +9,7 @@ import { ArrowUp, Calendar, Check, Move, PenLine } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { type Todo } from "../store/todo-context";
 import Tag from "./Tag";
-import constants from "../constants";
-// import constants from "../constants";
-// import { CalendarDateTime } from "@internationalized/date";
+import utils from "../utils";
 
 interface TodoProps {
   todo: Todo;
@@ -19,7 +17,7 @@ interface TodoProps {
 
 export default function Todo({ todo }: TodoProps) {
   const navigate = useNavigate();
-  const urgency = "high";
+  const urgency = utils.getUrgency(todo.dueDate);
 
   return (
     <Card
@@ -37,7 +35,7 @@ export default function Todo({ todo }: TodoProps) {
             className={`w-5 h-5 rounded-full ${
               urgency === "high"
                 ? "bg-red-500"
-                : urgency === "medium"
+                : urgency === "mid"
                 ? "bg-orange-400"
                 : "bg-blue-400"
             }`}
@@ -73,12 +71,12 @@ export default function Todo({ todo }: TodoProps) {
                 className={`${
                   urgency === "high"
                     ? "text-red-500"
-                    : urgency === "medium"
+                    : urgency === "mid"
                     ? "text-orange-400"
                     : "text-blue-400"
                 }`}
               >
-                {getDisplayDate()}
+                {utils.getDisplayDate(todo.dueDate)}
               </span>
             </p>
           </div>

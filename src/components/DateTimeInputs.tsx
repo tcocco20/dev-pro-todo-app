@@ -8,6 +8,7 @@ interface DateTimeInputsProps {
 }
 
 const DateTimeInputs = ({ value, onValueChange }: DateTimeInputsProps) => {
+  const today = new Date();
   return (
     <div className="flex justify-between gap-7">
       <DatePicker
@@ -20,6 +21,13 @@ const DateTimeInputs = ({ value, onValueChange }: DateTimeInputsProps) => {
         label="Select Due Date"
         labelPlacement="outside"
         radius="full"
+        minValue={
+          new CalendarDate(
+            today.getFullYear(),
+            today.getMonth() + 1,
+            today.getDate()
+          )
+        }
         variant="bordered"
         value={new CalendarDate(value.year, value.month, value.day)}
         onChange={(newVal) => {
@@ -40,6 +48,15 @@ const DateTimeInputs = ({ value, onValueChange }: DateTimeInputsProps) => {
         labelPlacement="outside"
         radius="full"
         variant="bordered"
+        minValue={
+          new CalendarDateTime(
+            today.getFullYear(),
+            today.getMonth() + 1,
+            today.getDate(),
+            today.getHours(),
+            today.getMinutes()
+          )
+        }
         endContent={<Clock className="text-blue-400" />}
         value={value}
         onChange={onValueChange}
