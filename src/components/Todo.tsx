@@ -17,6 +17,7 @@ interface TodoProps {
 export default function Todo({ todo }: TodoProps) {
   const navigate = useNavigate();
   const urgency = "high";
+  const displayDate = `${todo.dueDate.day}, ${todo.dueDate.hour}:${todo.dueDate.minute}`;
 
   return (
     <Card
@@ -26,6 +27,7 @@ export default function Todo({ todo }: TodoProps) {
           navigate(`view/${todo.id}`);
         }, 250);
       }}
+      className={todo.completed ? "bg-green-100" : ""}
     >
       <CardHeader className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
@@ -74,7 +76,7 @@ export default function Todo({ todo }: TodoProps) {
                     : "text-blue-400"
                 }`}
               >
-                {todo.dueDate.day}, {todo.dueDate.hour}:{todo.dueDate.minute}{" "}
+                {displayDate}
               </span>
             </p>
           </div>

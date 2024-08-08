@@ -26,7 +26,7 @@ const TaskForm = ({ todo }: TaskFormProps) => {
       new CalendarDateTime(
         new Date().getFullYear(),
         new Date().getMonth(),
-        new Date().getDay()
+        new Date().getDate()
       )
   );
   const [subtasks, setSubtasks] = useState(todo?.subtasks || []);

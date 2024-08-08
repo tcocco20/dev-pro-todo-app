@@ -1,4 +1,4 @@
-import { type CalendarDateTime } from "@internationalized/date";
+import { CalendarDateTime, CalendarDate } from "@internationalized/date";
 import { DatePicker, TimeInput } from "@nextui-org/react";
 import { Calendar, Clock } from "lucide-react";
 
@@ -21,8 +21,18 @@ const DateTimeInputs = ({ value, onValueChange }: DateTimeInputsProps) => {
         labelPlacement="outside"
         radius="full"
         variant="bordered"
-        value={value}
-        onChange={onValueChange}
+        value={new CalendarDate(value.year, value.month, value.day)}
+        onChange={(newVal) => {
+          onValueChange(
+            new CalendarDateTime(
+              newVal.year,
+              newVal.month,
+              newVal.day,
+              value.hour,
+              value.minute
+            )
+          );
+        }}
       />
       <TimeInput
         classNames={{ inputWrapper: "bg-white py-6", label: "text-lg" }}
