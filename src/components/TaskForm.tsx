@@ -25,7 +25,7 @@ const TaskForm = ({ todo }: TaskFormProps) => {
     todo?.dueDate ||
       new CalendarDateTime(
         new Date().getFullYear(),
-        new Date().getMonth(),
+        new Date().getMonth() + 1,
         new Date().getDate()
       )
   );

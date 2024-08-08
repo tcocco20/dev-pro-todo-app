@@ -9,6 +9,9 @@ import { ArrowUp, Calendar, Check, Move, PenLine } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { type Todo } from "../store/todo-context";
 import Tag from "./Tag";
+import constants from "../constants";
+// import constants from "../constants";
+// import { CalendarDateTime } from "@internationalized/date";
 
 interface TodoProps {
   todo: Todo;
@@ -17,7 +20,31 @@ interface TodoProps {
 export default function Todo({ todo }: TodoProps) {
   const navigate = useNavigate();
   const urgency = "high";
-  const displayDate = `${todo.dueDate.day}, ${todo.dueDate.hour}:${todo.dueDate.minute}`;
+
+  const getDisplayDate = () => {
+    const today = new Date();
+    const dueDate = new Date(
+      todo.dueDate.year,
+      todo.dueDate.month - 1,
+      todo.dueDate.day
+    );
+    let dayString = "";
+
+    // Check if the due date is today or tomorrow
+    if (today.toDateString() === dueDate.toDateString()) {
+      dayString = "Today";
+    } else {
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      if (tomorrow.toDateString() === dueDate.toDateString()) {
+        dayString = "Tomorrow";
+      } else {
+        dayString = constants.days[dueDate.getDay()] + " ";
+      }
+    }
+
+    return `${dayString}, ${dueDate.toLocaleDateString()}`;
+  };
 
   return (
     <Card
@@ -76,7 +103,7 @@ export default function Todo({ todo }: TodoProps) {
                     : "text-blue-400"
                 }`}
               >
-                {displayDate}
+                {"hello"}
               </span>
             </p>
           </div>
