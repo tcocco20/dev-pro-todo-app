@@ -21,31 +21,6 @@ export default function Todo({ todo }: TodoProps) {
   const navigate = useNavigate();
   const urgency = "high";
 
-  const getDisplayDate = () => {
-    const today = new Date();
-    const dueDate = new Date(
-      todo.dueDate.year,
-      todo.dueDate.month - 1,
-      todo.dueDate.day
-    );
-    let dayString = "";
-
-    // Check if the due date is today or tomorrow
-    if (today.toDateString() === dueDate.toDateString()) {
-      dayString = "Today";
-    } else {
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      if (tomorrow.toDateString() === dueDate.toDateString()) {
-        dayString = "Tomorrow";
-      } else {
-        dayString = constants.days[dueDate.getDay()] + " ";
-      }
-    }
-
-    return `${dayString}, ${dueDate.toLocaleDateString()}`;
-  };
-
   return (
     <Card
       isPressable
@@ -103,7 +78,7 @@ export default function Todo({ todo }: TodoProps) {
                     : "text-blue-400"
                 }`}
               >
-                {"hello"}
+                {getDisplayDate()}
               </span>
             </p>
           </div>
