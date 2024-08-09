@@ -38,7 +38,7 @@ const TaskDetailsPage = () => {
     <>
       <PageHeader title="Task Details" />
       <DetailsCard todo={todo} />
-      <SubtaskChecklist />
+      <SubtaskChecklist subtasks={todo.subtasks} />
       <DetailActions />
     </>
   );

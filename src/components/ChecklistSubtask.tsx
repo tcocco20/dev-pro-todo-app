@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 
 interface ChecklistSubtaskProps {
   title: string;
-  completed?: boolean;
+  completed: boolean;
   index: number;
 }
 

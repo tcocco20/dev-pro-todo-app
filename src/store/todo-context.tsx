@@ -3,10 +3,10 @@ import { createContext, useState, type ReactNode } from "react";
 
 export type TodoRange = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
-export interface Subtask {
+export type Subtask = {
   title: string;
   completed: boolean;
-}
+};
 
 export interface Todo {
   id: string;
@@ -29,6 +29,9 @@ export interface TodoContextValue extends TodoState {
   deleteTodo: (id: string) => void;
   updateTodo: (id: string, todo: Todo) => void;
   completeTodo: (id: string) => void;
+  completeSubtask: (todoId: string, index: number) => void;
+  unCheckSubtask: (todoId: string, index: number) => void;
+  repeatTodo: (id: string) => void;
   addTags: (tags: string[]) => void;
   getTodoById: (id: string) => Todo | undefined;
 }
@@ -59,6 +62,77 @@ const TodoProvider = ({ children }: TodoProviderProps) => {
       setTodoList((state) =>
         state.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
       );
+    },
+    completeSubtask(todoId, index) {
+      // Set subtask as completed
+      setTodoList((state) =>
+        state.map((todo) =>
+          todo.id === todoId
+            ? {
+                ...todo,
+                subtasks: todo.subtasks.map((subtask, i) =>
+                  i === index ? { ...subtask, completed: true } : subtask
+                ),
+              }
+            : todo
+        )
+      );
+
+      // Check to see if all subtasks are completed
+      const todo = todoList.find((todo) => todo.id === todoId);
+      if (!todo) {
+        return;
+      }
+      const allSubtasksCompleted = todo.subtasks.every(
+        (subtask) => subtask.completed
+      );
+      if (allSubtasksCompleted) {
+        setTodoList((state) =>
+          state.map((t) => (t.id === todoId ? { ...t, completed: true } : t))
+        );
+      }
+    },
+    unCheckSubtask(todoId, index) {
+      // Set subtask as not completed
+      setTodoList((state) =>
+        state.map((todo) =>
+          todo.id === todoId
+            ? {
+                ...todo,
+                subtasks: todo.subtasks.map((subtask, i) =>
+                  i === index ? { ...subtask, completed: false } : subtask
+                ),
+              }
+            : todo
+        )
+      );
+
+      // Uncheck the main task if it was completed
+      const todo = todoList.find((todo) => todo.id === todoId);
+      if (!todo) {
+        return;
+      }
+      if (todo.completed) {
+        setTodoList((state) =>
+          state.map((t) => (t.id === todoId ? { ...t, completed: false } : t))
+        );
+      }
+    },
+    repeatTodo(id) {
+      // Get the todo
+      const todo = todoList.find((todo) => todo.id === id);
+      if (!todo) {
+        return;
+      }
+      // Set completed to false
+      const newTodo = { ...todo, completed: false };
+      // Set subtasks to not completed
+      newTodo.subtasks = todo.subtasks.map((subtask) => ({
+        ...subtask,
+        completed: false,
+      }));
+
+      setTodoList((state) => state.map((t) => (t.id === id ? newTodo : t)));
     },
     addTags: (tags) => {
       setTagList((state) => [...state, ...tags]);
