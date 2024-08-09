@@ -7,7 +7,7 @@ import { useTodoContext } from "../store/useTodoContext";
 
 const TaskDetailsPage = () => {
   const { id } = useParams();
-  const { getTodoById } = useTodoContext();
+  const { getTodoById, completeSubtask, unCheckSubtask } = useTodoContext();
   if (!id) {
     return (
       <>
@@ -38,7 +38,11 @@ const TaskDetailsPage = () => {
     <>
       <PageHeader title="Task Details" />
       <DetailsCard todo={todo} />
-      <SubtaskChecklist subtasks={todo.subtasks} />
+      <SubtaskChecklist
+        subtasks={todo.subtasks}
+        completeSubtask={(index: number) => completeSubtask(id, index)}
+        unCheckSubtask={(index: number) => unCheckSubtask(id, index)}
+      />
       <DetailActions />
     </>
   );

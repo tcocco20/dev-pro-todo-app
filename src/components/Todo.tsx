@@ -19,6 +19,8 @@ export default function Todo({ todo }: TodoProps) {
   const navigate = useNavigate();
   const urgency = utils.getUrgency(todo.dueDate);
 
+  console.log("todo completed ?", todo.completed);
+
   return (
     <Card
       isPressable
@@ -102,7 +104,11 @@ export default function Todo({ todo }: TodoProps) {
             </div>
           )}
         </div>
-        <CircularProgress size="lg" value={20} showValueLabel />
+        <CircularProgress
+          size="lg"
+          value={utils.getProgress(todo.subtasks)}
+          showValueLabel
+        />
       </CardBody>
     </Card>
   );

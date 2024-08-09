@@ -3,9 +3,15 @@ import ChecklistSubtask from "./ChecklistSubtask";
 
 interface SubtaskChecklistProps {
   subtasks: Subtask[];
+  completeSubtask: (index: number) => void;
+  unCheckSubtask: (index: number) => void;
 }
 
-const SubtaskChecklist = ({ subtasks }: SubtaskChecklistProps) => {
+const SubtaskChecklist = ({
+  subtasks,
+  completeSubtask,
+  unCheckSubtask,
+}: SubtaskChecklistProps) => {
   if (!subtasks.length) {
     return null;
   }
@@ -19,6 +25,8 @@ const SubtaskChecklist = ({ subtasks }: SubtaskChecklistProps) => {
             title={subtask.title}
             completed={subtask.completed}
             index={index}
+            completeHandler={() => completeSubtask(index)}
+            uncheckHandler={() => unCheckSubtask(index)}
           />
         ))}
       </div>

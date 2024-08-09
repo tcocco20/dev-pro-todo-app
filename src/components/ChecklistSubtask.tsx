@@ -5,12 +5,16 @@ interface ChecklistSubtaskProps {
   title: string;
   completed: boolean;
   index: number;
+  completeHandler: () => void;
+  uncheckHandler: () => void;
 }
 
 const ChecklistSubtask = ({
   title,
   completed,
   index,
+  completeHandler,
+  uncheckHandler,
 }: ChecklistSubtaskProps) => {
   return (
     <Chip
@@ -24,6 +28,7 @@ const ChecklistSubtask = ({
           className={`${
             completed ? "bg-blue-500 text-white" : "bg-blue-100/70"
           }`}
+          onPress={completed ? uncheckHandler : completeHandler}
         >
           <Check />
         </Button>

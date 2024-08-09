@@ -66,7 +66,7 @@ const DetailsCard = ({ todo }: DetailsCardProps) => {
       </CardBody>
       <CardFooter>
         <Progress
-          value={utils.getProgress(todo.subtasks)}
+          value={todo.completed ? 100 : utils.getProgress(todo.subtasks)}
           label="Task Completed"
           showValueLabel
           className="mb-3"
