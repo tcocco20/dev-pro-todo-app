@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { type Todo } from "../store/todo-context";
 import Tag from "./Tag";
 import utils from "../utils";
+import { useTodoContext } from "../store/useTodoContext";
 
 interface TodoProps {
   todo: Todo;
@@ -18,6 +19,7 @@ interface TodoProps {
 export default function Todo({ todo }: TodoProps) {
   const navigate = useNavigate();
   const urgency = utils.getUrgency(todo.dueDate);
+  const { completeTodo } = useTodoContext();
 
   console.log("todo completed ?", todo.completed);
 
@@ -58,7 +60,13 @@ export default function Todo({ todo }: TodoProps) {
           >
             <PenLine size={22} />
           </Button>
-          <Button isIconOnly radius="full" size="sm" className="bg-blue-100/70">
+          <Button
+            isIconOnly
+            radius="full"
+            size="sm"
+            className="bg-blue-100/70"
+            onPress={() => completeTodo(todo.id)}
+          >
             <Check size={22} />
           </Button>
         </div>
@@ -106,7 +114,7 @@ export default function Todo({ todo }: TodoProps) {
         </div>
         <CircularProgress
           size="lg"
-          value={utils.getProgress(todo.subtasks)}
+          value={todo.completed ? 100 : utils.getProgress(todo.subtasks)}
           showValueLabel
         />
       </CardBody>

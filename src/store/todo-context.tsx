@@ -119,7 +119,8 @@ const TodoProvider = ({ children }: TodoProviderProps) => {
       setTodoList((state) => state.map((t) => (t.id === id ? newTodo : t)));
     },
     addTags: (tags) => {
-      setTagList((state) => [...state, ...tags]);
+      const newTags = tags.filter((tag) => !tagList.includes(tag));
+      setTagList((state) => [...state, ...newTags]);
     },
     getTodoById: (id) => todoList.find((todo) => todo.id === id),
   };

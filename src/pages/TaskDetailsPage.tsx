@@ -43,7 +43,7 @@ const TaskDetailsPage = () => {
         completeSubtask={(index: number) => completeSubtask(id, index)}
         unCheckSubtask={(index: number) => unCheckSubtask(id, index)}
       />
-      <DetailActions />
+      <DetailActions todoId={todo.id} />
     </>
   );
 };

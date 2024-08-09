@@ -35,7 +35,7 @@ const TaskForm = ({ todo }: TaskFormProps) => {
   const [subtasks, setSubtasks] = useState(todo?.subtasks || []);
   const [tags, setTags] = useState(todo?.tags || []);
 
-  const { addTodo, updateTodo } = useTodoContext();
+  const { addTodo, updateTodo, addTags } = useTodoContext();
 
   const saveTaskHandler = () => {
     if (todo) {
@@ -61,6 +61,9 @@ const TaskForm = ({ todo }: TaskFormProps) => {
         tags,
       });
     }
+
+    addTags(tags);
+
     navigate("..");
   };
   return (
