@@ -3,6 +3,11 @@ import { createContext, useState, type ReactNode } from "react";
 
 export type TodoRange = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
+export interface Subtask {
+  title: string;
+  completed: boolean;
+}
+
 export interface Todo {
   id: string;
   title: string;
@@ -11,10 +16,7 @@ export interface Todo {
   priority: TodoRange;
   complexity: TodoRange;
   tags: string[];
-  subtasks: {
-    title: string;
-    completed: boolean;
-  }[];
+  subtasks: Subtask[];
 }
 
 interface TodoState {

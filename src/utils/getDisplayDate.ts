@@ -6,6 +6,7 @@ export const getDisplayDate = (date: CalendarDateTime) => {
   const today = new Date();
   const dueDate = new Date(date.year, date.month - 1, date.day);
   const displayTime = getDisplayTime(date);
+  let yearString = "";
 
   // Check if the due date is today or tomorrow
   if (today.toDateString() === dueDate.toDateString()) {
@@ -29,5 +30,11 @@ export const getDisplayDate = (date: CalendarDateTime) => {
     dayString += "th";
   }
 
-  return `${constants.months[dueDate.getMonth()]} ${dayString}, ${displayTime}`;
+  if (today.getFullYear() !== dueDate.getFullYear()) {
+    yearString = `, ${dueDate.getFullYear()}`;
+  }
+
+  return `${
+    constants.months[dueDate.getMonth()]
+  } ${dayString}${yearString}, ${displayTime}`;
 };
