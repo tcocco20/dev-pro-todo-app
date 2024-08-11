@@ -1,5 +1,5 @@
 import { CalendarDateTime } from "@internationalized/date";
-import { createContext, useState, type ReactNode } from "react";
+import { createContext, useEffect, useState, type ReactNode } from "react";
 
 export type TodoRange = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
@@ -21,7 +21,6 @@ export interface Todo {
 
 interface TodoState {
   todoList: Todo[];
-  tagList: string[];
 }
 
 export interface TodoContextValue extends TodoState {
@@ -32,7 +31,6 @@ export interface TodoContextValue extends TodoState {
   completeSubtask: (todoId: string, index: number) => void;
   unCheckSubtask: (todoId: string, index: number) => void;
   repeatTodo: (id: string) => void;
-  addTags: (tags: string[]) => void;
   getTodoById: (id: string) => Todo | undefined;
 }
 
@@ -44,11 +42,9 @@ interface TodoProviderProps {
 
 const TodoProvider = ({ children }: TodoProviderProps) => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
-  const [tagList, setTagList] = useState<string[]>([]);
 
   const ctx: TodoContextValue = {
     todoList,
-    tagList,
     addTodo: (todo) => {
       setTodoList((state) => [...state, todo]);
     },
@@ -118,12 +114,24 @@ const TodoProvider = ({ children }: TodoProviderProps) => {
 
       setTodoList((state) => state.map((t) => (t.id === id ? newTodo : t)));
     },
-    addTags: (tags) => {
-      const newTags = tags.filter((tag) => !tagList.includes(tag));
-      setTagList((state) => [...state, ...newTags]);
-    },
     getTodoById: (id) => todoList.find((todo) => todo.id === id),
   };
+
+  useEffect(() => {
+    const storedTodos = localStorage.getItem("todos");
+    if (storedTodos) {
+      setTodoList(JSON.parse(storedTodos));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (todoList.length === 0) {
+      localStorage.removeItem("todos");
+    } else {
+      localStorage.setItem("todos", JSON.stringify(todoList));
+    }
+  }, [todoList]);
+
   return <TodoContext.Provider value={ctx}>{children}</TodoContext.Provider>;
 };
 
