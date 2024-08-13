@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useTodoContext } from "../store/useTodoContext";
 import { useState } from "react";
 
-type SortOption =
+export type SortOption =
   | "default"
   | "ascDate"
   | "DescDate"
@@ -22,13 +22,18 @@ const HomePage = () => {
   const [filteredTodoList, setFilteredTodoList] = useState(todoList);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sortOption, setSortOption] = useState<SortOption>("default");
+  const [sortOption, setSortOption] = useState("default");
 
   return (
     <div className="flex flex-col gap-5">
       <SearchBar />
-      <Filters />
-      <TodoList todoList={todoList} />
+      <Filters
+        selectedOption={sortOption}
+        setSelectedOption={setSortOption}
+        selectedTags={selectedTags}
+        setSelectedTags={setSelectedTags}
+      />
+      <TodoList todoList={filteredTodoList} />
       <div className="text-center">
         <Button
           size="lg"

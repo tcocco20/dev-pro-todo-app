@@ -3,7 +3,19 @@ import utils from "../utils";
 import Filter from "./Filter";
 import SortFilter from "./SortFilter";
 
-const Filters = () => {
+interface FilterProps {
+  selectedTags: string[];
+  selectedOption: string;
+  setSelectedOption: (option: string) => void;
+  setSelectedTags: (tags: string[]) => void;
+}
+
+const Filters = ({
+  selectedTags,
+  selectedOption,
+  setSelectedOption,
+  setSelectedTags,
+}: FilterProps) => {
   const { todoList } = useTodoContext();
   const sortOptions = [
     { key: "default", label: "Default", last: false },
@@ -22,10 +34,28 @@ const Filters = () => {
     last: i === arr.length - 1,
   }));
 
+  const handleSelectTag = (tag: string) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
+
   return (
     <div className="flex gap-8">
-      <SortFilter buttonTitle="Sort" menuItems={sortOptions} />
-      <Filter buttonTitle="Category" menuItems={filterOptions} />
+      <SortFilter
+        buttonTitle="Sort"
+        menuItems={sortOptions}
+        selectedOption={selectedOption}
+        setSelectedOption={setSelectedOption}
+      />
+      <Filter
+        selectTagHandler={handleSelectTag}
+        selectedTags={selectedTags}
+        buttonTitle="Category"
+        menuItems={filterOptions}
+      />
     </div>
   );
 };

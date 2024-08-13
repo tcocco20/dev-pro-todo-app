@@ -13,9 +13,16 @@ import { useState } from "react";
 interface FilterProps {
   buttonTitle: string;
   menuItems?: { key: string; label: string; last: boolean }[];
+  selectedOption?: string;
+  setSelectedOption?: (option: string) => void;
 }
 
-const SortFilter = ({ buttonTitle, menuItems }: FilterProps) => {
+const SortFilter = ({
+  buttonTitle,
+  menuItems,
+  selectedOption,
+  setSelectedOption,
+}: FilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const generateFilters = (
     options: { key: string; label: string; last: boolean }[]
@@ -55,7 +62,12 @@ const SortFilter = ({ buttonTitle, menuItems }: FilterProps) => {
         classNames={{ list: "inline-block" }}
       >
         <DropdownItem isReadOnly>
-          <RadioGroup color="default" defaultValue={"default"}>
+          <RadioGroup
+            color="default"
+            defaultValue={"default"}
+            value={selectedOption}
+            onValueChange={setSelectedOption}
+          >
             {generateFilters(menuItems!)}
           </RadioGroup>
         </DropdownItem>

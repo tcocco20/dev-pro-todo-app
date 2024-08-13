@@ -12,7 +12,9 @@ import classes from "./filter.module.css";
 
 interface FilterProps {
   buttonTitle: string;
-  menuItems?: { key: string; label: string; last: boolean; icon?: boolean }[];
+  menuItems: { key: string; label: string; last: boolean; icon?: boolean }[];
+  selectedTags: string[];
+  selectTagHandler: (tag: string) => void;
 }
 
 const Filter = ({
@@ -25,6 +27,8 @@ const Filter = ({
       icon: false,
     },
   ],
+  selectedTags,
+  selectTagHandler,
 }: FilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -51,12 +55,17 @@ const Filter = ({
             <DropdownItem
               key={item.key}
               selectedIcon={<div className="hidden" />}
+              onPress={() => selectTagHandler(item.label)}
               endContent={
                 item.icon === false ? (
                   <div className="hidden" />
                 ) : (
                   <CircleCheck
-                    className={`${classes.selected} bg-black rounded-full`}
+                    className={
+                      selectedTags.includes(item.label)
+                        ? `${classes.selected} bg-black rounded-full`
+                        : ""
+                    }
                   />
                 )
               }
@@ -68,11 +77,18 @@ const Filter = ({
               <DropdownItem
                 key={item.key}
                 selectedIcon={<div className="hidden" />}
+                onPress={() => selectTagHandler(item.label)}
                 endContent={
                   item.icon === false ? (
                     <div className="hidden" />
                   ) : (
-                    <CircleCheck />
+                    <CircleCheck
+                      className={
+                        selectedTags.includes(item.label)
+                          ? `${classes.selected} bg-black rounded-full`
+                          : ""
+                      }
+                    />
                   )
                 }
               >
