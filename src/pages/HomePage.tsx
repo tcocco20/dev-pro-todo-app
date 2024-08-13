@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useTodoContext } from "../store/useTodoContext";
 import { useEffect, useState } from "react";
 import { type Todo } from "../store/todo-context";
+import utils from "../utils";
 
 export type SortOption =
   | "default"
@@ -27,7 +28,18 @@ const HomePage = () => {
 
   useEffect(() => {
     setFilteredTodoList(todoList);
-  }, [todoList]);
+    setFilteredTodoList((prev) => {
+      // First filter by selected tags
+      let filteredList = utils.filterByTags(prev, selectedTags);
+
+      // Then filter by search term
+      filteredList = utils.filterBySearchTerm(filteredList, searchTerm);
+
+      // Lastly sort the list
+
+      return filteredList;
+    });
+  }, [todoList, searchTerm, selectedTags, sortOption]);
 
   return (
     <div className="flex flex-col gap-5">

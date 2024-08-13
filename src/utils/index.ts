@@ -6,6 +6,7 @@ import { getDisplayLevel } from "./getDisplayLevel";
 import { getProgress } from "./getProgress";
 import getTags from "./getTags";
 import { filterByTags } from "./filterByTags";
+import { filterBySearchTerm } from "./filterBySearchTerm";
 
 const utils = {
   getDisplayTime,
@@ -16,5 +17,6 @@ const utils = {
   getProgress,
   getTags,
   filterByTags,
+  filterBySearchTerm,
 };
 export default utils;
