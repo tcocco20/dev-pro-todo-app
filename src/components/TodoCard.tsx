@@ -16,7 +16,7 @@ interface TodoProps {
   todo: Todo;
 }
 
-export default function Todo({ todo }: TodoProps) {
+export default function TodoCard({ todo }: TodoProps) {
   const navigate = useNavigate();
   const urgency = utils.getUrgency(todo.dueDate);
   const { completeTodo } = useTodoContext();

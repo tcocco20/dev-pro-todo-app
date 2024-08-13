@@ -1,12 +1,16 @@
-import { useTodoContext } from "../store/useTodoContext";
-import Todo from "./Todo";
+import { type Todo } from "../store/todo-context";
+import TodoCard from "./TodoCard";
 
-const TodoList = () => {
-  const { todoList } = useTodoContext();
+interface TodoListProps {
+  todoList: Todo[];
+}
+
+const TodoList = ({todoList}: TodoListProps) => {
+  // const { todoList } = useTodoContext();
   return (
     <div className="flex flex-col gap-5">
       {todoList.map((todo) => (
-        <Todo key={todo.id} todo={todo} />
+        <TodoCard key={todo.id} todo={todo} />
       ))}
     </div>
   );

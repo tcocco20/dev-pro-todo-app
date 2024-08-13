@@ -4,6 +4,8 @@ import { getTruncatedString } from "./getTruncatedString";
 import { getUrgency } from "./getUrgency";
 import { getDisplayLevel } from "./getDisplayLevel";
 import { getProgress } from "./getProgress";
+import getTags from "./getTags";
+import { filterByTags } from "./filterByTags";
 
 const utils = {
   getDisplayTime,
@@ -12,5 +14,7 @@ const utils = {
   getTruncatedString,
   getDisplayLevel,
   getProgress,
+  getTags,
+  filterByTags,
 };
 export default utils;

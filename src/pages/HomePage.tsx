@@ -4,14 +4,31 @@ import SearchBar from "../components/SearchBar";
 import TodoList from "../components/TodoList";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTodoContext } from "../store/useTodoContext";
+import { useState } from "react";
+
+type SortOption =
+  | "default"
+  | "ascDate"
+  | "DescDate"
+  | "ascPriority"
+  | "descPriority"
+  | "ascComplexity"
+  | "descComplexity";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { todoList } = useTodoContext();
+  const [filteredTodoList, setFilteredTodoList] = useState(todoList);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [sortOption, setSortOption] = useState<SortOption>("default");
+
   return (
     <div className="flex flex-col gap-5">
       <SearchBar />
       <Filters />
-      <TodoList />
+      <TodoList todoList={todoList} />
       <div className="text-center">
         <Button
           size="lg"

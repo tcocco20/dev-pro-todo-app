@@ -1,9 +1,10 @@
 import { useTodoContext } from "../store/useTodoContext";
+import utils from "../utils";
 import Filter from "./Filter";
 import SortFilter from "./SortFilter";
 
 const Filters = () => {
-  const { tagList } = useTodoContext();
+  const { todoList } = useTodoContext();
   const sortOptions = [
     { key: "default", label: "Default", last: false },
     { key: "dateAsc", label: "Ascending Date", last: false },
@@ -13,16 +14,18 @@ const Filters = () => {
     { key: "priorityAsc", label: "Ascending Priority", last: false },
     { key: "priorityDesc", label: "Descending Priority", last: true },
   ];
+  const tags = utils.getTags(todoList);
 
-  const testTagFilters = tagList.map((tag, index, arr) => ({
-    key: tag,
+  const filterOptions = tags.map((tag, i, arr) => ({
+    key: i.toString(),
     label: tag,
-    last: index === arr.length - 1,
+    last: i === arr.length - 1,
   }));
+
   return (
     <div className="flex gap-8">
       <SortFilter buttonTitle="Sort" menuItems={sortOptions} />
-      <Filter buttonTitle="Category" menuItems={testTagFilters} />
+      <Filter buttonTitle="Category" menuItems={filterOptions} />
     </div>
   );
 };
