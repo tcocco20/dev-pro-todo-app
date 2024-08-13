@@ -2,7 +2,7 @@ import { Button } from "@nextui-org/react";
 import Filters from "../components/Filters";
 import SearchBar from "../components/SearchBar";
 import TodoList from "../components/TodoList";
-import { Plus } from "lucide-react";
+import { Plus, Power, PowerOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTodoContext } from "../store/useTodoContext";
 import { useEffect, useState } from "react";
@@ -31,21 +31,21 @@ const HomePage = () => {
     setFilteredTodoList(todoList);
 
     if (powerMode) {
-      
+      setFilteredTodoList(utils.filterForPowerMode(todoList));
+    } else {
+      setFilteredTodoList((prev) => {
+        // First filter by selected tags
+        let filteredList = utils.filterByTags(prev, selectedTags);
+
+        // Then filter by search term
+        filteredList = utils.filterBySearchTerm(filteredList, searchTerm);
+
+        // Lastly sort the list
+        filteredList = utils.sortTodos(filteredList, sortOption as SortOption);
+        return filteredList;
+      });
     }
-
-    setFilteredTodoList((prev) => {
-      // First filter by selected tags
-      let filteredList = utils.filterByTags(prev, selectedTags);
-
-      // Then filter by search term
-      filteredList = utils.filterBySearchTerm(filteredList, searchTerm);
-
-      // Lastly sort the list
-      filteredList = utils.sortTodos(filteredList, sortOption as SortOption);
-      return filteredList;
-    });
-  }, [todoList, searchTerm, selectedTags, sortOption]);
+  }, [todoList, searchTerm, selectedTags, sortOption, powerMode]);
 
   return (
     <div className="flex flex-col gap-5">
@@ -56,6 +56,20 @@ const HomePage = () => {
         selectedTags={selectedTags}
         setSelectedTags={setSelectedTags}
       />
+      <div className="text-center">
+        <Button
+          size="lg"
+          radius="full"
+          className="text-xl opacity-85 py-8"
+          startContent={powerMode ? <PowerOff /> : <Power />}
+          color="primary"
+          onClick={() => {
+            setPowerMode((prev) => !prev);
+          }}
+        >
+          Turn Power Mode {powerMode ? "Off" : "On"}
+        </Button>
+      </div>
       <TodoList todoList={filteredTodoList} />
       <div className="text-center">
         <Button
