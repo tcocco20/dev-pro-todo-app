@@ -21,8 +21,6 @@ export default function TodoCard({ todo }: TodoProps) {
   const urgency = utils.getUrgency(todo.dueDate);
   const { completeTodo } = useTodoContext();
 
-  console.log("todo completed ?", todo.completed);
-
   return (
     <Card
       isPressable
@@ -104,13 +102,13 @@ export default function TodoCard({ todo }: TodoProps) {
               {todo.complexity}/10)
             </p>
           </div>
-          {todo.tags.length && (
+          {todo.tags.length ? (
             <div className="flex gap-2 flex-wrap">
               {todo.tags.map((tag, i) => (
                 <Tag key={i} title={tag} index={i} />
               ))}
             </div>
-          )}
+          ) : null}
         </div>
         <CircularProgress
           size="lg"

@@ -60,20 +60,17 @@ const TodoProvider = ({ children }: TodoProviderProps) => {
       );
     },
     completeSubtask(todoId, index) {
-      // Create copy of the todo
       const todo = { ...todoList.find((todo) => todo.id === todoId) } as Todo;
       if (!todo) {
         return;
       }
 
-      // Set subtask as completed
       todo.subtasks[index].completed = true;
-      // Check to see if all subtasks are completed
+
       const allSubtasksCompleted = todo.subtasks.every(
         (subtask) => subtask.completed
       );
 
-      // If all subtasks are completed, set the main task as completed
       if (allSubtasksCompleted) {
         todo.completed = true;
       }
@@ -82,15 +79,13 @@ const TodoProvider = ({ children }: TodoProviderProps) => {
       );
     },
     unCheckSubtask(todoId, index) {
-      // Create copy of the todo
       const todo = { ...todoList.find((todo) => todo.id === todoId) } as Todo;
       if (!todo) {
         return;
       }
-      // Set subtask as not completed
+
       todo.subtasks[index].completed = false;
 
-      // Uncheck the main task if it was completed
       if (todo.completed) {
         todo.completed = false;
       }
@@ -99,14 +94,13 @@ const TodoProvider = ({ children }: TodoProviderProps) => {
       );
     },
     repeatTodo(id) {
-      // Get the todo
       const todo = todoList.find((todo) => todo.id === id);
       if (!todo) {
         return;
       }
-      // Set completed to false
+
       const newTodo = { ...todo, completed: false };
-      // Set subtasks to not completed
+
       newTodo.subtasks = todo.subtasks.map((subtask) => ({
         ...subtask,
         completed: false,
@@ -120,7 +114,18 @@ const TodoProvider = ({ children }: TodoProviderProps) => {
   useEffect(() => {
     const storedTodos = localStorage.getItem("todos");
     if (storedTodos) {
-      setTodoList(JSON.parse(storedTodos));
+      // Parse the stored todos and map the dueDate to CalendarDateTime
+      const mappedTodos = JSON.parse(storedTodos).map((todo: Todo) => ({
+        ...todo,
+        dueDate: new CalendarDateTime(
+          todo.dueDate.year,
+          todo.dueDate.month,
+          todo.dueDate.day,
+          todo.dueDate.hour,
+          todo.dueDate.minute
+        ),
+      }));
+      setTodoList(mappedTodos);
     }
   }, []);
 
@@ -131,6 +136,8 @@ const TodoProvider = ({ children }: TodoProviderProps) => {
       localStorage.setItem("todos", JSON.stringify(todoList));
     }
   }, [todoList]);
+
+  console.log(todoList);
 
   return <TodoContext.Provider value={ctx}>{children}</TodoContext.Provider>;
 };

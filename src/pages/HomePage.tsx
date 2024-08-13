@@ -5,7 +5,8 @@ import TodoList from "../components/TodoList";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTodoContext } from "../store/useTodoContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { type Todo } from "../store/todo-context";
 
 export type SortOption =
   | "default"
@@ -19,14 +20,18 @@ export type SortOption =
 const HomePage = () => {
   const navigate = useNavigate();
   const { todoList } = useTodoContext();
-  const [filteredTodoList, setFilteredTodoList] = useState(todoList);
+  const [filteredTodoList, setFilteredTodoList] = useState<Todo[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortOption, setSortOption] = useState("default");
 
+  useEffect(() => {
+    setFilteredTodoList(todoList);
+  }, [todoList]);
+
   return (
     <div className="flex flex-col gap-5">
-      <SearchBar />
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <Filters
         selectedOption={sortOption}
         setSelectedOption={setSortOption}
