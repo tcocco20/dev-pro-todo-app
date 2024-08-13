@@ -19,12 +19,12 @@ const Filters = ({
   const { todoList } = useTodoContext();
   const sortOptions = [
     { key: "default", label: "Default", last: false },
-    { key: "dateAsc", label: "Ascending Date", last: false },
-    { key: "dateDesc", label: "Descending Date", last: false },
-    { key: "complexityAsc", label: "Ascending Complexity", last: false },
-    { key: "complexityDesc", label: "Descending Complexity", last: false },
-    { key: "priorityAsc", label: "Ascending Priority", last: false },
-    { key: "priorityDesc", label: "Descending Priority", last: true },
+    { key: "ascDate", label: "Ascending Date", last: false },
+    { key: "descDate", label: "Descending Date", last: false },
+    { key: "ascComplexity", label: "Ascending Complexity", last: false },
+    { key: "descComplexity", label: "Descending Complexity", last: false },
+    { key: "ascPriority", label: "Ascending Priority", last: false },
+    { key: "descPriority", label: "Descending Priority", last: true },
   ];
   const tags = utils.getTags(todoList);
 

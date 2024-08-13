@@ -7,6 +7,8 @@ import { getProgress } from "./getProgress";
 import getTags from "./getTags";
 import { filterByTags } from "./filterByTags";
 import { filterBySearchTerm } from "./filterBySearchTerm";
+import { sortTodos } from "./sortTodos";
+import { filterForPowerMode } from "./filterForPowerMode";
 
 const utils = {
   getDisplayTime,
@@ -18,5 +20,7 @@ const utils = {
   getTags,
   filterByTags,
   filterBySearchTerm,
+  sortTodos,
+  filterForPowerMode,
 };
 export default utils;

@@ -12,7 +12,7 @@ import utils from "../utils";
 export type SortOption =
   | "default"
   | "ascDate"
-  | "DescDate"
+  | "descDate"
   | "ascPriority"
   | "descPriority"
   | "ascComplexity"
@@ -22,12 +22,18 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { todoList } = useTodoContext();
   const [filteredTodoList, setFilteredTodoList] = useState<Todo[]>([]);
+  const [powerMode, setPowerMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortOption, setSortOption] = useState("default");
 
   useEffect(() => {
     setFilteredTodoList(todoList);
+
+    if (powerMode) {
+      
+    }
+
     setFilteredTodoList((prev) => {
       // First filter by selected tags
       let filteredList = utils.filterByTags(prev, selectedTags);
@@ -36,7 +42,7 @@ const HomePage = () => {
       filteredList = utils.filterBySearchTerm(filteredList, searchTerm);
 
       // Lastly sort the list
-
+      filteredList = utils.sortTodos(filteredList, sortOption as SortOption);
       return filteredList;
     });
   }, [todoList, searchTerm, selectedTags, sortOption]);
