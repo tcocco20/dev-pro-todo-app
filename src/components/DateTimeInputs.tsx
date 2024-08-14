@@ -42,13 +42,7 @@ const DateTimeInputs = ({
         onChange={(newVal) => {
           if (!value) {
             onValueChange(
-              new CalendarDateTime(
-                newVal.year,
-                newVal.month,
-                newVal.day,
-                value.hour,
-                value.minute
-              )
+              new CalendarDateTime(newVal.year, newVal.month, newVal.day)
             );
             return;
           }

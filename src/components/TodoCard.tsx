@@ -110,11 +110,13 @@ export default function TodoCard({ todo }: TodoProps) {
             </div>
           ) : null}
         </div>
-        <CircularProgress
-          size="lg"
-          value={todo.completed ? 100 : utils.getProgress(todo.subtasks)}
-          showValueLabel
-        />
+        {todo.subtasks.length > 0 ? (
+          <CircularProgress
+            size="lg"
+            value={todo.completed ? 100 : utils.getProgress(todo.subtasks)}
+            showValueLabel
+          />
+        ) : null}
       </CardBody>
     </Card>
   );

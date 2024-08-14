@@ -8,6 +8,7 @@ import {
 import { ArrowUp, Calendar, Move } from "lucide-react";
 import { Todo } from "../store/todo-context";
 import utils from "../utils";
+import Tag from "./Tag";
 
 interface DetailsCardProps {
   todo: Todo;
@@ -64,18 +65,27 @@ const DetailsCard = ({ todo }: DetailsCardProps) => {
           </p>
         </div>
       </CardBody>
-      <CardFooter>
-        <Progress
-          value={todo.completed ? 100 : utils.getProgress(todo.subtasks)}
-          label="Task Completed"
-          showValueLabel
-          className="mb-3"
-          classNames={{
-            label: "text-xl",
-            value: "text-xl text-blue-500",
-            labelWrapper: "mb-2",
-          }}
-        />
+      <CardFooter className="flex flex-col gap-2">
+        {todo.subtasks.length > 0 ? (
+          <Progress
+            value={todo.completed ? 100 : utils.getProgress(todo.subtasks)}
+            label="Task Completed"
+            showValueLabel
+            className="mb-3"
+            classNames={{
+              label: "text-xl",
+              value: "text-xl text-blue-500",
+              labelWrapper: "mb-2",
+            }}
+          />
+        ) : null}
+        {todo.tags.length ? (
+          <div className="flex gap-2 flex-wrap self-start">
+            {todo.tags.map((tag, i) => (
+              <Tag key={i} title={tag} index={i} />
+            ))}
+          </div>
+        ) : null}
       </CardFooter>
     </Card>
   );

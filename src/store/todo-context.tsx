@@ -1,5 +1,6 @@
 import { CalendarDateTime } from "@internationalized/date";
 import { createContext, useEffect, useState, type ReactNode } from "react";
+import { uid } from "uid";
 
 export type TodoRange = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
@@ -60,10 +61,22 @@ const TodoProvider = ({ children }: TodoProviderProps) => {
       );
     },
     completeSubtask(todoId, index) {
-      const todo = { ...todoList.find((todo) => todo.id === todoId) } as Todo;
+      const todo = JSON.parse(
+        JSON.stringify(todoList.find((todo) => todo.id === todoId))
+      ) as Todo;
+
       if (!todo) {
         return;
       }
+
+      // Map the dueDate to CalendarDateTime
+      todo.dueDate = new CalendarDateTime(
+        todo.dueDate.year,
+        todo.dueDate.month,
+        todo.dueDate.day,
+        todo.dueDate.hour,
+        todo.dueDate.minute
+      );
 
       todo.subtasks[index].completed = true;
 
@@ -79,10 +92,21 @@ const TodoProvider = ({ children }: TodoProviderProps) => {
       );
     },
     unCheckSubtask(todoId, index) {
-      const todo = { ...todoList.find((todo) => todo.id === todoId) } as Todo;
+      const todo = JSON.parse(
+        JSON.stringify(todoList.find((todo) => todo.id === todoId))
+      );
+
       if (!todo) {
         return;
       }
+
+      todo.dueDate = new CalendarDateTime(
+        todo.dueDate.year,
+        todo.dueDate.month,
+        todo.dueDate.day,
+        todo.dueDate.hour,
+        todo.dueDate.minute
+      );
 
       todo.subtasks[index].completed = false;
 
@@ -99,7 +123,7 @@ const TodoProvider = ({ children }: TodoProviderProps) => {
         return;
       }
 
-      const newTodo = { ...todo, completed: false };
+      const newTodo = { ...todo, completed: false, id: uid() };
 
       newTodo.subtasks = todo.subtasks.map((subtask) => ({
         ...subtask,

@@ -8,7 +8,5 @@ export const validateDate = (date: CalendarDateTime | null) => {
 
   const selectedDate = date.toDate(getLocalTimeZone());
 
-  console.log("Selected title: ", selectedDate);
-  console.log("Today's date: ", today);
   return selectedDate < today;
 };
