@@ -5,9 +5,14 @@ import { Calendar, Clock } from "lucide-react";
 interface DateTimeInputsProps {
   value: CalendarDateTime | null;
   onValueChange: (value: CalendarDateTime) => void;
+  isInvalid?: boolean;
 }
 
-const DateTimeInputs = ({ value, onValueChange }: DateTimeInputsProps) => {
+const DateTimeInputs = ({
+  value,
+  onValueChange,
+  isInvalid,
+}: DateTimeInputsProps) => {
   const today = new Date();
   return (
     <div className="flex justify-between gap-7">
@@ -20,6 +25,8 @@ const DateTimeInputs = ({ value, onValueChange }: DateTimeInputsProps) => {
         selectorIcon={<Calendar size={18} />}
         label="Select Due Date"
         labelPlacement="outside"
+        errorMessage="Due date cannot be empty or in the past"
+        isInvalid={isInvalid}
         radius="full"
         minValue={
           new CalendarDate(
@@ -53,6 +60,8 @@ const DateTimeInputs = ({ value, onValueChange }: DateTimeInputsProps) => {
         labelPlacement="outside"
         radius="full"
         variant="bordered"
+        errorMessage="Due date cannot be empty or in the past"
+        isInvalid={isInvalid}
         minValue={
           new CalendarDateTime(
             today.getFullYear(),

@@ -1,3 +1,3 @@
 export const validateTitle = (title: string) => {
-  return title.length > 0;
+  return title.length === 0;
 };

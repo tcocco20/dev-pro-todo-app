@@ -1,6 +1,6 @@
 import { Button, Input } from "@nextui-org/react";
 import { Check, X } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface SubtaskProps {
   title: string;
@@ -11,6 +11,7 @@ interface SubtaskProps {
 
 const Subtask = ({ title, index, onUpdate, onDelete }: SubtaskProps) => {
   const [focused, setFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const taskButton = focused ? (
     <Button
@@ -36,6 +37,7 @@ const Subtask = ({ title, index, onUpdate, onDelete }: SubtaskProps) => {
   return (
     <Input
       onFocus={() => setFocused(true)}
+      ref={inputRef}
       onBlur={() => setTimeout(() => setFocused(false), 100)}
       value={title}
       onValueChange={onUpdate}
@@ -46,6 +48,11 @@ const Subtask = ({ title, index, onUpdate, onDelete }: SubtaskProps) => {
       classNames={{ inputWrapper: "bg-white py-6" }}
       startContent={`${index + 1}.`}
       endContent={taskButton}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          inputRef.current?.blur();
+        }
+      }}
     />
   );
 };

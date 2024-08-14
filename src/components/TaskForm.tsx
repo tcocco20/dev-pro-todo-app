@@ -5,9 +5,10 @@ import Subtasks from "./Subtasks";
 import TagsInput from "./TagsInput";
 import { useNavigate } from "react-router-dom";
 import { Todo, type TodoRange } from "../store/todo-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTodoContext } from "../store/useTodoContext";
 import { uid } from "uid";
+import utils from "../utils";
 
 interface TaskFormProps {
   todo?: Todo;
@@ -29,6 +30,12 @@ const TaskForm = ({ todo }: TaskFormProps) => {
   const { addTodo, updateTodo } = useTodoContext();
 
   const saveTaskHandler = () => {
+    if (utils.validateTitle(title) || utils.validateDate(dueDate)) {
+      setTitleInvalid(utils.validateTitle(title));
+      setDueDateInvalid(utils.validateDate(dueDate));
+      return;
+    }
+
     if (todo) {
       updateTodo(todo.id, {
         id: todo.id,
@@ -36,7 +43,7 @@ const TaskForm = ({ todo }: TaskFormProps) => {
         priority,
         completed: todo.completed,
         complexity,
-        dueDate,
+        dueDate: dueDate!,
         subtasks,
         tags,
       });
@@ -47,7 +54,7 @@ const TaskForm = ({ todo }: TaskFormProps) => {
         priority,
         completed: false,
         complexity,
-        dueDate,
+        dueDate: dueDate!,
         subtasks,
         tags,
       });
@@ -55,6 +62,17 @@ const TaskForm = ({ todo }: TaskFormProps) => {
 
     navigate("..");
   };
+
+  useEffect(() => {
+    if (titleInvalid !== undefined) {
+      setTitleInvalid(utils.validateTitle(title));
+    }
+
+    if (dueDateInvalid !== undefined) {
+      setDueDateInvalid(utils.validateDate(dueDate));
+    }
+  }, [title, dueDate, titleInvalid, dueDateInvalid]);
+
   return (
     <div className="flex flex-col gap-5">
       <Input
@@ -80,7 +98,11 @@ const TaskForm = ({ todo }: TaskFormProps) => {
         value={complexity}
         onValueChange={setComplexity}
       />
-      <DateTimeInputs value={dueDate} onValueChange={setDueDate} />
+      <DateTimeInputs
+        value={dueDate}
+        onValueChange={setDueDate}
+        isInvalid={dueDateInvalid}
+      />
       <Subtasks tasks={subtasks} setSubtasks={setSubtasks} />
       <TagsInput value={tags} onValueChange={setTags} />
       <div className="text-center">

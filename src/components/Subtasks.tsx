@@ -20,6 +20,7 @@ interface SubtasksProps {
 
 const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
   const [newTask, setNewTask] = useState("");
+  const [isInvalid, setIsInvalid] = useState<boolean>();
 
   const updateSubtask = (index: number, title: string) => {
     setSubtasks((prev) => {
@@ -36,6 +37,19 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
       return updatedSubtasks;
     });
   };
+
+  const addSubtask = () => {
+    if (newTask.trim() === "") {
+      setIsInvalid(true);
+      return;
+    }
+
+    setSubtasks((prev) => [
+      ...prev,
+      { title: newTask || "", completed: false },
+    ]);
+    setNewTask("");
+  };
   return (
     <div>
       <p className="text-lg mb-2">Add Checklist for Subtasks</p>
@@ -47,24 +61,19 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
           radius="full"
           size="lg"
           variant="bordered"
-          classNames={{ inputWrapper: "bg-white py-6" }}
-          onSubmit={() => {
-            console.log("Submitted");
-            console.log(newTask);
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              addSubtask();
+            }
           }}
+          classNames={{ inputWrapper: "bg-white py-6" }}
           endContent={
             <Button
               isIconOnly
               radius="full"
               size="sm"
               className="bg-blue-100/70"
-              onPress={() => {
-                setSubtasks((prev) => [
-                  ...prev,
-                  { title: newTask || "", completed: false },
-                ]);
-                setNewTask("");
-              }}
+              onPress={() => addSubtask()}
             >
               <Plus />
             </Button>
