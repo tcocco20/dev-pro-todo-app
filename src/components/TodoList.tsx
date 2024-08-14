@@ -5,8 +5,10 @@ interface TodoListProps {
   todoList: Todo[];
 }
 
-const TodoList = ({todoList}: TodoListProps) => {
-  // const { todoList } = useTodoContext();
+const TodoList = ({ todoList }: TodoListProps) => {
+  if (todoList.length === 0) {
+    return null;
+  }
   return (
     <div className="flex flex-col gap-5">
       {todoList.map((todo) => (
