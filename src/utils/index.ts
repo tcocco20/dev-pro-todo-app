@@ -9,6 +9,8 @@ import { filterByTags } from "./filterByTags";
 import { filterBySearchTerm } from "./filterBySearchTerm";
 import { sortTodos } from "./sortTodos";
 import { filterForPowerMode } from "./filterForPowerMode";
+import { validateDate } from "./validateDate";
+import { validateTitle } from "./validateTitle";
 
 const utils = {
   getDisplayTime,
@@ -22,5 +24,7 @@ const utils = {
   filterBySearchTerm,
   sortTodos,
   filterForPowerMode,
+  validateDate,
+  validateTitle,
 };
 export default utils;

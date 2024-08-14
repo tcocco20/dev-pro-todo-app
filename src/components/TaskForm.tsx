@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { Todo, type TodoRange } from "../store/todo-context";
 import { useState } from "react";
 import { useTodoContext } from "../store/useTodoContext";
-import { CalendarDateTime } from "@internationalized/date";
 import { uid } from "uid";
 
 interface TaskFormProps {
@@ -16,22 +15,14 @@ interface TaskFormProps {
 
 const TaskForm = ({ todo }: TaskFormProps) => {
   const navigate = useNavigate();
-  const today = new Date();
   const [title, setTitle] = useState(todo?.title || "");
+  const [titleInvalid, setTitleInvalid] = useState<boolean>();
   const [priority, setPriority] = useState<TodoRange>(todo?.priority || 1);
   const [complexity, setComplexity] = useState<TodoRange>(
     todo?.complexity || 1
   );
-  const [dueDate, setDueDate] = useState(
-    todo?.dueDate ||
-      new CalendarDateTime(
-        today.getFullYear(),
-        today.getMonth() + 1,
-        today.getDate(),
-        today.getHours(),
-        today.getMinutes()
-      )
-  );
+  const [dueDate, setDueDate] = useState(todo?.dueDate || null);
+  const [dueDateInvalid, setDueDateInvalid] = useState<boolean>();
   const [subtasks, setSubtasks] = useState(todo?.subtasks || []);
   const [tags, setTags] = useState(todo?.tags || []);
 
@@ -76,6 +67,8 @@ const TaskForm = ({ todo }: TaskFormProps) => {
         classNames={{ inputWrapper: "bg-white py-6", label: "text-lg" }}
         value={title}
         onValueChange={setTitle}
+        errorMessage={"Title is required"}
+        isInvalid={titleInvalid}
       />
       <CustomSelect
         label="Select Priority Level"

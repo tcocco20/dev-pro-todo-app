@@ -3,7 +3,7 @@ import { DatePicker, TimeInput } from "@nextui-org/react";
 import { Calendar, Clock } from "lucide-react";
 
 interface DateTimeInputsProps {
-  value: CalendarDateTime;
+  value: CalendarDateTime | null;
   onValueChange: (value: CalendarDateTime) => void;
 }
 
@@ -29,8 +29,13 @@ const DateTimeInputs = ({ value, onValueChange }: DateTimeInputsProps) => {
           )
         }
         variant="bordered"
-        value={new CalendarDate(value.year, value.month, value.day)}
+        value={
+          value ? new CalendarDate(value.year, value.month, value.day) : null
+        }
         onChange={(newVal) => {
+          if (!value) {
+            return;
+          }
           onValueChange(
             new CalendarDateTime(
               newVal.year,
