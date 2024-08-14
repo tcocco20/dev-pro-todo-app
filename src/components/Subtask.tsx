@@ -1,6 +1,6 @@
 import { Button, Input } from "@nextui-org/react";
 import { Check, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface SubtaskProps {
   title: string;
@@ -11,7 +11,17 @@ interface SubtaskProps {
 
 const Subtask = ({ title, index, onUpdate, onDelete }: SubtaskProps) => {
   const [focused, setFocused] = useState(false);
+  const [isInvalid, setIsInvalid] = useState<boolean>();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const updateHandler = (newText: string) => {
+    onUpdate(newText);
+    if (newText.trim() === "") {
+      setIsInvalid(true);
+      return;
+    }
+    setIsInvalid(undefined);
+  };
 
   const taskButton = focused ? (
     <Button
@@ -19,7 +29,7 @@ const Subtask = ({ title, index, onUpdate, onDelete }: SubtaskProps) => {
       radius="full"
       size="sm"
       className="bg-blue-100/70"
-      onPress={() => onUpdate(title)}
+      onPress={() => updateHandler(title)}
     >
       <Check />
     </Button>
@@ -34,14 +44,33 @@ const Subtask = ({ title, index, onUpdate, onDelete }: SubtaskProps) => {
       <X />
     </Button>
   );
+
+  useEffect(() => {
+    if (isInvalid !== undefined) {
+      if (title.trim() !== "") {
+        setIsInvalid(false);
+      } else {
+        setIsInvalid(true);
+      }
+    }
+  }, [title, isInvalid]);
+
   return (
     <Input
       onFocus={() => setFocused(true)}
       ref={inputRef}
-      onBlur={() => setTimeout(() => setFocused(false), 100)}
+      onBlur={() => {
+        if (isInvalid) {
+          inputRef.current?.focus();
+          return;
+        }
+        setIsInvalid(undefined);
+        setTimeout(() => setFocused(false), 100);
+      }}
       value={title}
-      onValueChange={onUpdate}
-      placeholder="Type to add new subtask..."
+      onValueChange={updateHandler}
+      isInvalid={isInvalid}
+      errorMessage="Subtask cannot be empty"
       radius="full"
       size="lg"
       variant="bordered"

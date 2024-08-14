@@ -1,7 +1,7 @@
 import { Button, Input } from "@nextui-org/react";
 import { Plus } from "lucide-react";
 import Subtask from "./Subtask";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface SubtasksProps {
   tasks: {
@@ -49,7 +49,19 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
       { title: newTask || "", completed: false },
     ]);
     setNewTask("");
+    setIsInvalid(undefined);
   };
+
+  useEffect(() => {
+    if (isInvalid !== undefined) {
+      if (newTask.trim() !== "") {
+        setIsInvalid(false);
+      } else {
+        setIsInvalid(true);
+      }
+    }
+  }, [newTask, isInvalid]);
+
   return (
     <div>
       <p className="text-lg mb-2">Add Checklist for Subtasks</p>
@@ -60,6 +72,8 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
           onValueChange={setNewTask}
           radius="full"
           size="lg"
+          isInvalid={isInvalid}
+          errorMessage="Subtask cannot be empty"
           variant="bordered"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
