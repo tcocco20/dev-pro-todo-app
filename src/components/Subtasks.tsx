@@ -52,9 +52,7 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
 
   useEffect(() => {
     if (isInvalid !== undefined) {
-      if (utils.validateTitle(newTask)) {
-        setIsInvalid(true);
-      } else {
+      if (!utils.validateTitle(newTask)) {
         setIsInvalid(false);
       }
     }
