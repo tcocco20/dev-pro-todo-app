@@ -1,6 +1,7 @@
 import { Button, Input } from "@nextui-org/react";
 import { Check, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import utils from "../utils";
 
 interface SubtaskProps {
   title: string;
@@ -16,7 +17,7 @@ const Subtask = ({ title, index, onUpdate, onDelete }: SubtaskProps) => {
 
   const updateHandler = (newText: string) => {
     onUpdate(newText);
-    if (newText.trim() === "") {
+    if (utils.validateTitle(newText)) {
       setIsInvalid(true);
       return;
     }
@@ -47,7 +48,7 @@ const Subtask = ({ title, index, onUpdate, onDelete }: SubtaskProps) => {
 
   useEffect(() => {
     if (isInvalid !== undefined) {
-      if (title.trim() !== "") {
+      if (utils.validateTitle(title)) {
         setIsInvalid(false);
       } else {
         setIsInvalid(true);

@@ -2,6 +2,7 @@ import { Button, Input } from "@nextui-org/react";
 import { Plus } from "lucide-react";
 import Subtask from "./Subtask";
 import { useEffect, useState } from "react";
+import utils from "../utils";
 
 interface SubtasksProps {
   tasks: {
@@ -39,7 +40,7 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
   };
 
   const addSubtask = () => {
-    if (newTask.trim() === "") {
+    if (utils.validateTitle(newTask)) {
       setIsInvalid(true);
       return;
     }
@@ -54,7 +55,7 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
 
   useEffect(() => {
     if (isInvalid !== undefined) {
-      if (newTask.trim() !== "") {
+      if (utils.validateTitle(newTask)) {
         setIsInvalid(false);
       } else {
         setIsInvalid(true);
