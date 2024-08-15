@@ -3,6 +3,7 @@ import RootLayout from "./pages/RootLayout";
 import HomePage from "./pages/HomePage";
 import AddNewPage from "./pages/AddNewPage";
 import TaskDetailsPage from "./pages/TaskDetailsPage";
+import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
       { path: "edit/:id", element: <AddNewPage /> },
       { path: "view/:id", element: <TaskDetailsPage /> },
     ],
+    errorElement: <ErrorPage />,
   },
 ]);
 
