@@ -49,9 +49,9 @@ const Subtask = ({ title, index, onUpdate, onDelete }: SubtaskProps) => {
   useEffect(() => {
     if (isInvalid !== undefined) {
       if (utils.validateTitle(title)) {
-        setIsInvalid(false);
-      } else {
         setIsInvalid(true);
+      } else {
+        setIsInvalid(false);
       }
     }
   }, [title, isInvalid]);

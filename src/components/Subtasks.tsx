@@ -45,10 +45,7 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
       return;
     }
 
-    setSubtasks((prev) => [
-      ...prev,
-      { title: newTask || "", completed: false },
-    ]);
+    setSubtasks((prev) => [...prev, { title: newTask, completed: false }]);
     setNewTask("");
     setIsInvalid(undefined);
   };
@@ -56,9 +53,9 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
   useEffect(() => {
     if (isInvalid !== undefined) {
       if (utils.validateTitle(newTask)) {
-        setIsInvalid(false);
-      } else {
         setIsInvalid(true);
+      } else {
+        setIsInvalid(false);
       }
     }
   }, [newTask, isInvalid]);
