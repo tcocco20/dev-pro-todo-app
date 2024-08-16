@@ -61,7 +61,7 @@ const Subtasks = ({ tasks, setSubtasks }: SubtasksProps) => {
   return (
     <div>
       <p className="text-lg mb-2">Add Checklist for Subtasks</p>
-      <div className="flex flex-col-reverse gap-5">
+      <div className="flex flex-col gap-5">
         <Input
           placeholder="Type to add new subtask..."
           value={newTask}

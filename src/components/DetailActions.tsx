@@ -17,7 +17,7 @@ const DetailActions = ({ todoId }: DetailActionsProps) => {
           variant="flat"
           size="lg"
           radius="full"
-          className="flex-1 bg-blue-100/70"
+          className="flex-1 bg-blue-400/70"
           onPress={() => navigate("/edit/" + todoId)}
         >
           Edit Task
@@ -26,7 +26,7 @@ const DetailActions = ({ todoId }: DetailActionsProps) => {
           variant="flat"
           size="lg"
           radius="full"
-          className="flex-1 bg-red-100/70"
+          className="flex-1 bg-red-400/70"
           onPress={() => {
             deleteTodo(todoId);
             navigate("..");

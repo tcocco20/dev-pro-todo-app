@@ -70,7 +70,6 @@ const HomePage = () => {
           Turn Power Mode {powerMode ? "Off" : "On"}
         </Button>
       </div>
-      <TodoList todoList={filteredTodoList} />
       <div className="text-center">
         <Button
           size="lg"
@@ -87,6 +86,7 @@ const HomePage = () => {
           Add New Task
         </Button>
       </div>
+      <TodoList todoList={filteredTodoList} />
     </div>
   );
 };
